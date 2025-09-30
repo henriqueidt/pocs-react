@@ -15,7 +15,6 @@ export function TodoList() {
       id: `todo-${nextIdRef.current++}`,
       text: inputValue.trim(),
       completed: false,
-      createdAt: new Date()
     };
     
     setTodos([...todos, newTodo]);
@@ -69,8 +68,10 @@ export function TodoList() {
       
       {/* Add new todo */}
       <div className="flex gap-2 mb-6">
+        <label className="sr-only" htmlFor="new-todo">Add new todo</label>
         <input
           type="text"
+          id="new-todo"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyPress={handleKeyPress}
@@ -150,9 +151,6 @@ export function TodoList() {
                 }`}
               >
                 {todo.text}
-              </span>
-              <span className="text-sm text-gray-400">
-                {todo.createdAt.toISOString().split('T')[0]}
               </span>
               <button
                 onClick={() => removeTodo(todo.id)}
