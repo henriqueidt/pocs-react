@@ -1,4 +1,4 @@
-describe('template spec', () => {
+describe('Todo Page', () => {
   it('should create a new todo', () => {
     cy.visit('http://localhost:5173/todos')
 
