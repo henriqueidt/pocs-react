@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import type { TodoItem, TodoFilter } from '../types/todo';
 
 export function TodoList() {
   const [todos, setTodos] = useState<TodoItem[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [filter, setFilter] = useState<TodoFilter>('all');
+  const nextIdRef = useRef(1);
 
   // Add new todo
   const addTodo = () => {
     if (inputValue.trim() === '') return;
     
     const newTodo: TodoItem = {
-      id: Date.now().toString(),
+      id: `todo-${nextIdRef.current++}`,
       text: inputValue.trim(),
       completed: false,
       createdAt: new Date()
@@ -151,7 +152,7 @@ export function TodoList() {
                 {todo.text}
               </span>
               <span className="text-sm text-gray-400">
-                {todo.createdAt.toLocaleDateString()}
+                {todo.createdAt.toISOString().split('T')[0]}
               </span>
               <button
                 onClick={() => removeTodo(todo.id)}
