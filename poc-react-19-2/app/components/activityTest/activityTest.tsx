@@ -2,7 +2,6 @@ import { Activity, useState } from "react";
 import FormTest from "../formTest/formTest";
 
 const ActivityTest = () => {
-  const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
 
   return (
