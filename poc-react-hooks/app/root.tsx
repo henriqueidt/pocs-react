@@ -1,5 +1,6 @@
 import {
   isRouteErrorResponse,
+  Link,
   Links,
   Meta,
   Outlet,
@@ -42,7 +43,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <nav className="flex gap-4 p-4 bg-gray-100 dark:bg-gray-900">
+        <Link to="/" className="hover:underline">
+          Home
+        </Link>
+        <Link to="/use-transition" className="hover:underline">
+          useTransition
+        </Link>
+        <Link to="/use-deferred-value" className="hover:underline">
+          useDeferredValue
+        </Link>
+      </nav>
+      <Outlet />
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
