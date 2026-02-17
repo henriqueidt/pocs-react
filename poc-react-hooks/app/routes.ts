@@ -4,4 +4,5 @@ export default [
   index("routes/home.tsx"),
   route("use-transition", "routes/use-transition.tsx"),
   route("use-deferred-value", "routes/use-deferred-value.tsx"),
+  route("use-imperative-handle", "routes/use-imperative-handle.tsx"),
 ] satisfies RouteConfig;

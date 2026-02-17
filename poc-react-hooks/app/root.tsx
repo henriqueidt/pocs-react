@@ -55,6 +55,9 @@ export default function App() {
         <Link to="/use-deferred-value" className="hover:underline">
           useDeferredValue
         </Link>
+        <Link to="/use-imperative-handle" className="hover:underline">
+          useImperativeHandle
+        </Link>
       </nav>
       <Outlet />
     </>
