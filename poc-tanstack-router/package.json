@@ -6,7 +6,9 @@
     "dev": "vite dev --port 3000",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "generate-routes": "tsr generate",
+    "watch-routes": "tsr watch"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "@tanstack/devtools-vite": "^0.3.11",
+    "@tanstack/router-cli": "^1.160.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/node": "^22.10.2",
