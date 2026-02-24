@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/posts/")({
-  component: PostsIndexComponent,
+  component: RouteComponent,
 });
 
-function PostsIndexComponent() {
-  return <div>Please select a post</div>;
+function RouteComponent() {
+  return <div>Please specify a post</div>;
 }
