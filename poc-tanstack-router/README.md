@@ -41,3 +41,18 @@ Index routes are routes that will target their parent route when it's path is ex
 Dynamic route segments are routes in which part of the path is taken as a pathParam.
 
 The dynamic path or pathParam is declared in the route with a `$` before its name and can be captured in the params properties
+
+## Catch All Routes (Splat)
+
+[posts/$.tsx](src/routes/posts/$.tsx)
+
+A splat route will capture all the unknown path passed after the `$` inside the `_splat` pathParam
+
+For example, when accessing `/posts/unknown-param/another-param/123`
+The params on the splat route will be:
+
+```JS
+{
+  _splat: "unknown-param/another-param/123"
+}
+```
