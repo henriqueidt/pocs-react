@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as PostsIndexRouteImport } from './routes/posts/index'
 import { Route as PostsPostIdRouteImport } from './routes/posts/$postId'
 import { Route as PostsSplatRouteImport } from './routes/posts/$'
+import { Route as BooksChar123CategoryChar125RouteImport } from './routes/books.{-$category}'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -40,10 +41,17 @@ const PostsSplatRoute = PostsSplatRouteImport.update({
   path: '/posts/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BooksChar123CategoryChar125Route =
+  BooksChar123CategoryChar125RouteImport.update({
+    id: '/books/{-$category}',
+    path: '/books/{-$category}',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/books/{-$category}': typeof BooksChar123CategoryChar125Route
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/posts/': typeof PostsIndexRoute
@@ -51,6 +59,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/books/{-$category}': typeof BooksChar123CategoryChar125Route
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/posts': typeof PostsIndexRoute
@@ -59,21 +68,42 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/books/{-$category}': typeof BooksChar123CategoryChar125Route
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/posts/': typeof PostsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/posts/$' | '/posts/$postId' | '/posts/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/books/{-$category}'
+    | '/posts/$'
+    | '/posts/$postId'
+    | '/posts/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/posts/$' | '/posts/$postId' | '/posts'
-  id: '__root__' | '/' | '/about' | '/posts/$' | '/posts/$postId' | '/posts/'
+  to:
+    | '/'
+    | '/about'
+    | '/books/{-$category}'
+    | '/posts/$'
+    | '/posts/$postId'
+    | '/posts'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/books/{-$category}'
+    | '/posts/$'
+    | '/posts/$postId'
+    | '/posts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  BooksChar123CategoryChar125Route: typeof BooksChar123CategoryChar125Route
   PostsSplatRoute: typeof PostsSplatRoute
   PostsPostIdRoute: typeof PostsPostIdRoute
   PostsIndexRoute: typeof PostsIndexRoute
@@ -116,12 +146,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/books/{-$category}': {
+      id: '/books/{-$category}'
+      path: '/books/{-$category}'
+      fullPath: '/books/{-$category}'
+      preLoaderRoute: typeof BooksChar123CategoryChar125RouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  BooksChar123CategoryChar125Route: BooksChar123CategoryChar125Route,
   PostsSplatRoute: PostsSplatRoute,
   PostsPostIdRoute: PostsPostIdRoute,
   PostsIndexRoute: PostsIndexRoute,

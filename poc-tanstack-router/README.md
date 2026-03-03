@@ -56,3 +56,11 @@ The params on the splat route will be:
   _splat: "unknown-param/another-param/123"
 }
 ```
+
+## Optional Path Parameters
+
+[books.{-$category}.tsx](src/routes/books.{-$category}.tsx)
+
+Optional path params may or may not be present on the URL
+
+In this case `category` is an optional parameter. Independant if it is passed or not, it will fall into the same route
