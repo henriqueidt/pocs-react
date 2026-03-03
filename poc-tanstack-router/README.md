@@ -70,3 +70,8 @@ In this case `category` is an optional parameter. Independant if it is passed or
 [music.tsx](src/routes/music.tsx)
 
 Layout routes let's us have a wrapper route that will render it as a container of all of it's child routes
+
+In this case, both
+`/music/list`
+`/music/play`
+will have the `music.tsx` layout as their wrapper
