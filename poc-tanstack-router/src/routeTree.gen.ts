@@ -9,13 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MusicRouteImport } from './routes/music'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PostsIndexRouteImport } from './routes/posts/index'
 import { Route as PostsPostIdRouteImport } from './routes/posts/$postId'
 import { Route as PostsSplatRouteImport } from './routes/posts/$'
+import { Route as MusicPlayRouteImport } from './routes/music.play'
+import { Route as MusicListRouteImport } from './routes/music.list'
 import { Route as BooksChar123CategoryChar125RouteImport } from './routes/books.{-$category}'
 
+const MusicRoute = MusicRouteImport.update({
+  id: '/music',
+  path: '/music',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -41,6 +49,16 @@ const PostsSplatRoute = PostsSplatRouteImport.update({
   path: '/posts/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MusicPlayRoute = MusicPlayRouteImport.update({
+  id: '/play',
+  path: '/play',
+  getParentRoute: () => MusicRoute,
+} as any)
+const MusicListRoute = MusicListRouteImport.update({
+  id: '/list',
+  path: '/list',
+  getParentRoute: () => MusicRoute,
+} as any)
 const BooksChar123CategoryChar125Route =
   BooksChar123CategoryChar125RouteImport.update({
     id: '/books/{-$category}',
@@ -51,7 +69,10 @@ const BooksChar123CategoryChar125Route =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/music': typeof MusicRouteWithChildren
   '/books/{-$category}': typeof BooksChar123CategoryChar125Route
+  '/music/list': typeof MusicListRoute
+  '/music/play': typeof MusicPlayRoute
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/posts/': typeof PostsIndexRoute
@@ -59,7 +80,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/music': typeof MusicRouteWithChildren
   '/books/{-$category}': typeof BooksChar123CategoryChar125Route
+  '/music/list': typeof MusicListRoute
+  '/music/play': typeof MusicPlayRoute
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/posts': typeof PostsIndexRoute
@@ -68,7 +92,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/music': typeof MusicRouteWithChildren
   '/books/{-$category}': typeof BooksChar123CategoryChar125Route
+  '/music/list': typeof MusicListRoute
+  '/music/play': typeof MusicPlayRoute
   '/posts/$': typeof PostsSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/posts/': typeof PostsIndexRoute
@@ -78,7 +105,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/music'
     | '/books/{-$category}'
+    | '/music/list'
+    | '/music/play'
     | '/posts/$'
     | '/posts/$postId'
     | '/posts/'
@@ -86,7 +116,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/music'
     | '/books/{-$category}'
+    | '/music/list'
+    | '/music/play'
     | '/posts/$'
     | '/posts/$postId'
     | '/posts'
@@ -94,7 +127,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/music'
     | '/books/{-$category}'
+    | '/music/list'
+    | '/music/play'
     | '/posts/$'
     | '/posts/$postId'
     | '/posts/'
@@ -103,6 +139,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  MusicRoute: typeof MusicRouteWithChildren
   BooksChar123CategoryChar125Route: typeof BooksChar123CategoryChar125Route
   PostsSplatRoute: typeof PostsSplatRoute
   PostsPostIdRoute: typeof PostsPostIdRoute
@@ -111,6 +148,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/music': {
+      id: '/music'
+      path: '/music'
+      fullPath: '/music'
+      preLoaderRoute: typeof MusicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -146,6 +190,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/music/play': {
+      id: '/music/play'
+      path: '/play'
+      fullPath: '/music/play'
+      preLoaderRoute: typeof MusicPlayRouteImport
+      parentRoute: typeof MusicRoute
+    }
+    '/music/list': {
+      id: '/music/list'
+      path: '/list'
+      fullPath: '/music/list'
+      preLoaderRoute: typeof MusicListRouteImport
+      parentRoute: typeof MusicRoute
+    }
     '/books/{-$category}': {
       id: '/books/{-$category}'
       path: '/books/{-$category}'
@@ -156,9 +214,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface MusicRouteChildren {
+  MusicListRoute: typeof MusicListRoute
+  MusicPlayRoute: typeof MusicPlayRoute
+}
+
+const MusicRouteChildren: MusicRouteChildren = {
+  MusicListRoute: MusicListRoute,
+  MusicPlayRoute: MusicPlayRoute,
+}
+
+const MusicRouteWithChildren = MusicRoute._addFileChildren(MusicRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  MusicRoute: MusicRouteWithChildren,
   BooksChar123CategoryChar125Route: BooksChar123CategoryChar125Route,
   PostsSplatRoute: PostsSplatRoute,
   PostsPostIdRoute: PostsPostIdRoute,

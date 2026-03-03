@@ -64,3 +64,9 @@ The params on the splat route will be:
 Optional path params may or may not be present on the URL
 
 In this case `category` is an optional parameter. Independant if it is passed or not, it will fall into the same route
+
+## Layout Routes
+
+[music.tsx](src/routes/music.tsx)
+
+Layout routes let's us have a wrapper route that will render it as a container of all of it's child routes
