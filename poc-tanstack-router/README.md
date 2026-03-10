@@ -83,3 +83,11 @@ will have the `music.tsx` layout as their wrapper
 Pathless layout Routes work the same as Layout Routes, except they they aren't considered for the route path, it's just a wrapper that is added to all child routes
 
 For example, when we can access `/songs` route, it will render `_pathless.songs.tsx` with `_pathless.tsx` as the wrapper
+
+## Non-nested Routes
+
+[music\_.$musicId.edit.tsx](src/routes/music_.$musicId.edit.tsx)
+
+Non-nested routes can be used in routes to keep the path from the parent, while rendering their own component tree, without the parent wrapper
+
+For example, to acess `music_.$musicId.edit.tsx` we will use the nested path `/music/{musicId}/edit`, but the layout wrapper from `music.tsx` won't be rendered
