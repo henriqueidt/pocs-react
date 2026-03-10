@@ -91,3 +91,9 @@ For example, when we can access `/songs` route, it will render `_pathless.songs.
 Non-nested routes can be used in routes to keep the path from the parent, while rendering their own component tree, without the parent wrapper
 
 For example, to acess `music_.$musicId.edit.tsx` we will use the nested path `/music/{musicId}/edit`, but the layout wrapper from `music.tsx` won't be rendered
+
+## Excluding files from routes
+
+[/routes/posts/-components/button.tsx](src/routes/posts/-components/button.tsx)
+
+Files or entire folders prepended with `-` will be ignored from the routing system and can be used to create components, utils, etc to be used in routes
