@@ -97,3 +97,11 @@ For example, to acess `music_.$musicId.edit.tsx` we will use the nested path `/m
 [/routes/posts/-components/button.tsx](src/routes/posts/-components/button.tsx)
 
 Files or entire folders prepended with `-` will be ignored from the routing system and can be used to create components, utils, etc to be used in routes
+
+## Pathless group directories
+
+[src/routes/(auth)](<src/routes/(auth)>)
+
+Folders with `()` as the name wrapper do not include their name into the route itself. Those are used only to organizing related routes together.
+
+The path to `src/routes/(auth).login.tsx` will be `/login`, not `/auth/login`

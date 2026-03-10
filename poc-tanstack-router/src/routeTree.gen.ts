@@ -20,6 +20,8 @@ import { Route as MusicPlayRouteImport } from './routes/music.play'
 import { Route as MusicListRouteImport } from './routes/music.list'
 import { Route as BooksChar123CategoryChar125RouteImport } from './routes/books.{-$category}'
 import { Route as PathlessSongsRouteImport } from './routes/_pathless.songs'
+import { Route as authRegisterRouteImport } from './routes/(auth)/register'
+import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as MusicMusicIdEditRouteImport } from './routes/music_.$musicId.edit'
 
 const MusicRoute = MusicRouteImport.update({
@@ -77,6 +79,16 @@ const PathlessSongsRoute = PathlessSongsRouteImport.update({
   path: '/songs',
   getParentRoute: () => PathlessRoute,
 } as any)
+const authRegisterRoute = authRegisterRouteImport.update({
+  id: '/(auth)/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authLoginRoute = authLoginRouteImport.update({
+  id: '/(auth)/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MusicMusicIdEditRoute = MusicMusicIdEditRouteImport.update({
   id: '/music_/$musicId/edit',
   path: '/music/$musicId/edit',
@@ -87,6 +99,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/music': typeof MusicRouteWithChildren
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
   '/songs': typeof PathlessSongsRoute
   '/books/{-$category}': typeof BooksChar123CategoryChar125Route
   '/music/list': typeof MusicListRoute
@@ -100,6 +114,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/music': typeof MusicRouteWithChildren
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
   '/songs': typeof PathlessSongsRoute
   '/books/{-$category}': typeof BooksChar123CategoryChar125Route
   '/music/list': typeof MusicListRoute
@@ -115,6 +131,8 @@ export interface FileRoutesById {
   '/_pathless': typeof PathlessRouteWithChildren
   '/about': typeof AboutRoute
   '/music': typeof MusicRouteWithChildren
+  '/(auth)/login': typeof authLoginRoute
+  '/(auth)/register': typeof authRegisterRoute
   '/_pathless/songs': typeof PathlessSongsRoute
   '/books/{-$category}': typeof BooksChar123CategoryChar125Route
   '/music/list': typeof MusicListRoute
@@ -130,6 +148,8 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/music'
+    | '/login'
+    | '/register'
     | '/songs'
     | '/books/{-$category}'
     | '/music/list'
@@ -143,6 +163,8 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/music'
+    | '/login'
+    | '/register'
     | '/songs'
     | '/books/{-$category}'
     | '/music/list'
@@ -157,6 +179,8 @@ export interface FileRouteTypes {
     | '/_pathless'
     | '/about'
     | '/music'
+    | '/(auth)/login'
+    | '/(auth)/register'
     | '/_pathless/songs'
     | '/books/{-$category}'
     | '/music/list'
@@ -172,6 +196,8 @@ export interface RootRouteChildren {
   PathlessRoute: typeof PathlessRouteWithChildren
   AboutRoute: typeof AboutRoute
   MusicRoute: typeof MusicRouteWithChildren
+  authLoginRoute: typeof authLoginRoute
+  authRegisterRoute: typeof authRegisterRoute
   BooksChar123CategoryChar125Route: typeof BooksChar123CategoryChar125Route
   PostsSplatRoute: typeof PostsSplatRoute
   PostsPostIdRoute: typeof PostsPostIdRoute
@@ -258,6 +284,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PathlessSongsRouteImport
       parentRoute: typeof PathlessRoute
     }
+    '/(auth)/register': {
+      id: '/(auth)/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof authRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/login': {
+      id: '/(auth)/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof authLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/music_/$musicId/edit': {
       id: '/music_/$musicId/edit'
       path: '/music/$musicId/edit'
@@ -297,6 +337,8 @@ const rootRouteChildren: RootRouteChildren = {
   PathlessRoute: PathlessRouteWithChildren,
   AboutRoute: AboutRoute,
   MusicRoute: MusicRouteWithChildren,
+  authLoginRoute: authLoginRoute,
+  authRegisterRoute: authRegisterRoute,
   BooksChar123CategoryChar125Route: BooksChar123CategoryChar125Route,
   PostsSplatRoute: PostsSplatRoute,
   PostsPostIdRoute: PostsPostIdRoute,
