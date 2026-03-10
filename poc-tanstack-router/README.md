@@ -75,3 +75,11 @@ In this case, both
 `/music/list`
 `/music/play`
 will have the `music.tsx` layout as their wrapper
+
+## Pathless Layout Routes
+
+[\_pathless.tsx](src/routes/_pathless.tsx)
+
+Pathless layout Routes work the same as Layout Routes, except they they aren't considered for the route path, it's just a wrapper that is added to all child routes
+
+For example, when we can access `/songs` route, it will render `_pathless.songs.tsx` with `_pathless.tsx` as the wrapper

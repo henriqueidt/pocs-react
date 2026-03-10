@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MusicRouteImport } from './routes/music'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as PathlessRouteImport } from './routes/_pathless'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PostsIndexRouteImport } from './routes/posts/index'
 import { Route as PostsPostIdRouteImport } from './routes/posts/$postId'
@@ -18,6 +19,7 @@ import { Route as PostsSplatRouteImport } from './routes/posts/$'
 import { Route as MusicPlayRouteImport } from './routes/music.play'
 import { Route as MusicListRouteImport } from './routes/music.list'
 import { Route as BooksChar123CategoryChar125RouteImport } from './routes/books.{-$category}'
+import { Route as PathlessSongsRouteImport } from './routes/_pathless.songs'
 
 const MusicRoute = MusicRouteImport.update({
   id: '/music',
@@ -27,6 +29,10 @@ const MusicRoute = MusicRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PathlessRoute = PathlessRouteImport.update({
+  id: '/_pathless',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -65,11 +71,17 @@ const BooksChar123CategoryChar125Route =
     path: '/books/{-$category}',
     getParentRoute: () => rootRouteImport,
   } as any)
+const PathlessSongsRoute = PathlessSongsRouteImport.update({
+  id: '/songs',
+  path: '/songs',
+  getParentRoute: () => PathlessRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/music': typeof MusicRouteWithChildren
+  '/songs': typeof PathlessSongsRoute
   '/books/{-$category}': typeof BooksChar123CategoryChar125Route
   '/music/list': typeof MusicListRoute
   '/music/play': typeof MusicPlayRoute
@@ -81,6 +93,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/music': typeof MusicRouteWithChildren
+  '/songs': typeof PathlessSongsRoute
   '/books/{-$category}': typeof BooksChar123CategoryChar125Route
   '/music/list': typeof MusicListRoute
   '/music/play': typeof MusicPlayRoute
@@ -91,8 +104,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_pathless': typeof PathlessRouteWithChildren
   '/about': typeof AboutRoute
   '/music': typeof MusicRouteWithChildren
+  '/_pathless/songs': typeof PathlessSongsRoute
   '/books/{-$category}': typeof BooksChar123CategoryChar125Route
   '/music/list': typeof MusicListRoute
   '/music/play': typeof MusicPlayRoute
@@ -106,6 +121,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/music'
+    | '/songs'
     | '/books/{-$category}'
     | '/music/list'
     | '/music/play'
@@ -117,6 +133,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/music'
+    | '/songs'
     | '/books/{-$category}'
     | '/music/list'
     | '/music/play'
@@ -126,8 +143,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_pathless'
     | '/about'
     | '/music'
+    | '/_pathless/songs'
     | '/books/{-$category}'
     | '/music/list'
     | '/music/play'
@@ -138,6 +157,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PathlessRoute: typeof PathlessRouteWithChildren
   AboutRoute: typeof AboutRoute
   MusicRoute: typeof MusicRouteWithChildren
   BooksChar123CategoryChar125Route: typeof BooksChar123CategoryChar125Route
@@ -160,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_pathless': {
+      id: '/_pathless'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PathlessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -211,8 +238,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BooksChar123CategoryChar125RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_pathless/songs': {
+      id: '/_pathless/songs'
+      path: '/songs'
+      fullPath: '/songs'
+      preLoaderRoute: typeof PathlessSongsRouteImport
+      parentRoute: typeof PathlessRoute
+    }
   }
 }
+
+interface PathlessRouteChildren {
+  PathlessSongsRoute: typeof PathlessSongsRoute
+}
+
+const PathlessRouteChildren: PathlessRouteChildren = {
+  PathlessSongsRoute: PathlessSongsRoute,
+}
+
+const PathlessRouteWithChildren = PathlessRoute._addFileChildren(
+  PathlessRouteChildren,
+)
 
 interface MusicRouteChildren {
   MusicListRoute: typeof MusicListRoute
@@ -228,6 +274,7 @@ const MusicRouteWithChildren = MusicRoute._addFileChildren(MusicRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PathlessRoute: PathlessRouteWithChildren,
   AboutRoute: AboutRoute,
   MusicRoute: MusicRouteWithChildren,
   BooksChar123CategoryChar125Route: BooksChar123CategoryChar125Route,
