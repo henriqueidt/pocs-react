@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProductsRouteImport } from './routes/products'
 import { Route as MusicRouteImport } from './routes/music'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -19,6 +20,11 @@ import { Route as MusicPlayRouteImport } from './routes/music.play'
 import { Route as MusicListRouteImport } from './routes/music.list'
 import { Route as BooksChar123CategoryChar125RouteImport } from './routes/books.{-$category}'
 
+const ProductsRoute = ProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MusicRoute = MusicRouteImport.update({
   id: '/music',
   path: '/music',
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/music': typeof MusicRouteWithChildren
   '/books/{-$category}': typeof BooksChar123CategoryChar125Route
+  '/products': typeof ProductsRoute
   '/music/list': typeof MusicListRoute
   '/music/play': typeof MusicPlayRoute
   '/posts/$': typeof PostsSplatRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/music': typeof MusicRouteWithChildren
   '/books/{-$category}': typeof BooksChar123CategoryChar125Route
+  '/products': typeof ProductsRoute
   '/music/list': typeof MusicListRoute
   '/music/play': typeof MusicPlayRoute
   '/posts/$': typeof PostsSplatRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/music': typeof MusicRouteWithChildren
   '/books/{-$category}': typeof BooksChar123CategoryChar125Route
+  '/products': typeof ProductsRoute
   '/music/list': typeof MusicListRoute
   '/music/play': typeof MusicPlayRoute
   '/posts/$': typeof PostsSplatRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/music'
     | '/books/{-$category}'
+    | '/products'
     | '/music/list'
     | '/music/play'
     | '/posts/$'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/music'
     | '/books/{-$category}'
+    | '/products'
     | '/music/list'
     | '/music/play'
     | '/posts/$'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/music'
     | '/books/{-$category}'
+    | '/products'
     | '/music/list'
     | '/music/play'
     | '/posts/$'
@@ -141,6 +153,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   MusicRoute: typeof MusicRouteWithChildren
   BooksChar123CategoryChar125Route: typeof BooksChar123CategoryChar125Route
+  ProductsRoute: typeof ProductsRoute
   PostsSplatRoute: typeof PostsSplatRoute
   PostsPostIdRoute: typeof PostsPostIdRoute
   PostsIndexRoute: typeof PostsIndexRoute
@@ -211,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BooksChar123CategoryChar125RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -231,6 +251,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   MusicRoute: MusicRouteWithChildren,
   BooksChar123CategoryChar125Route: BooksChar123CategoryChar125Route,
+  ProductsRoute: ProductsRoute,
   PostsSplatRoute: PostsSplatRoute,
   PostsPostIdRoute: PostsPostIdRoute,
   PostsIndexRoute: PostsIndexRoute,
